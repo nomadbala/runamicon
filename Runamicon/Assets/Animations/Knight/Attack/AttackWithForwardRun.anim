@@ -96245,7 +96245,7 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 1.2333333
+  - time: 1.0666667
     functionName: StopPlayerHorizontally
     data: 
     objectReferenceParameter: {fileID: 0}
