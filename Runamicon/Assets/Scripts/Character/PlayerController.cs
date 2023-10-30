@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private float _runSpeed;
 	[SerializeField] private float _jumpHeight;
 
+	[SerializeField] private GameObject _player;
 
 	private CharacterController _characterController;
 	private Animator _animator;
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour {
 
 	private bool _isRun;
 	private bool _isAtackJump;
+	private bool _isAttack;
 
 	[Header("Gravity Parameters")]
 	[SerializeField] private float _stickToGroundForce;
@@ -43,11 +45,12 @@ public class PlayerController : MonoBehaviour {
 
 		//_mouseAxisX = Input.GetAxis("Mouse X");
 		//_mouseAxisY = Input.GetAxis("Mouse Y");
-		if (Input.GetKeyDown(KeyCode.Mouse0)) {
+		if (Input.GetKeyDown(KeyCode.Mouse0) && _isAttack == false) {
+			_isAttack = true;
 			_animator.SetTrigger("IsAttack");
 
 			if (_verticalInput < 0) {
-				_animator.Play("AttackWithBackWalk", 2,0f);
+				_animator.Play("AttackWithBackWalk", 2, 0f);
 				_animator.Play("FullRotation", 1, 0f);
 			} else if (!_isRun && _verticalInput >= 0) {
 				_animator.Play("ForwardAttack", 2, 0f);
@@ -60,22 +63,28 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
+
 		Move();
 	}
 
 	private void Move() {
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
 																										Mathf.Abs(_verticalInput) > 0.15f);
-		float speed = _isRun ? _runSpeed : _walkSpeed;
-		Vector3 direction = transform.right * _horizontalInput +
-												transform.forward * _verticalInput;
-		direction.Normalize();
 
-		_newPosition.x = direction.x * speed;
-		_newPosition.z = direction.z * speed;
+		if (!_isAttack) {
+			Debug.Log(1);
+			float speed = _isRun ? _runSpeed : _walkSpeed;
+			Vector3 direction = transform.right * _horizontalInput +
+													transform.forward * _verticalInput;
+			direction.Normalize();
 
+			_newPosition.x = direction.x * speed;
+			_newPosition.z = direction.z * speed;
+		}
 		JumpAndGravitation();
+
 		_characterController.Move(_newPosition * Time.deltaTime);
+
 		//Debug.Log(_characterController.velocity.magnitude);
 		_animator.SetFloat("Speed", _characterController.velocity.magnitude);
 		_animator.SetFloat("VerticalDirections", _verticalInput);
@@ -88,9 +97,18 @@ public class PlayerController : MonoBehaviour {
 			} else {
 				_newPosition.y = -_stickToGroundForce;
 			}
+			
 		} else {
 			_isAtackJump = false;
 			_newPosition.y += Physics.gravity.y * _gravityMultiplier * Time.deltaTime;
 		}
 	}
+
+	public void SetEndOfAttack() {
+		_isAttack = false;
+	}
+	public void StopPlayerHorizontally(){
+		_newPosition = new Vector3(0f, _newPosition.y, 0f);
+	}
 }
+
