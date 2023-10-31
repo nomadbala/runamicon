@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Update() {
-		_horizontalInput = Input.GetAxisRaw("Horizontal");
-		_verticalInput = Input.GetAxisRaw("Vertical");
+		_horizontalInput = Input.GetAxis("Horizontal");
+		_verticalInput = Input.GetAxis("Vertical");
 		//Debug.Log(_horizontalInput + "   " + _verticalInput);
 		//_mouseAxisX = Input.GetAxis("Mouse X");
 		//_mouseAxisY = Input.GetAxis("Mouse Y");
@@ -121,14 +121,15 @@ public class PlayerController : MonoBehaviour {
 				_animator.Play("AttackWithBackWalk", 2, 0f);
 				_animator.Play("FullRotation", 1, 0f);
 			} else if (!_isRun && (_verticalInput >= 0 || _horizontalInput != 0)) {
-				float time = 0f;
-				if (_animator.GetFloat("Speed") > 0f) {
-					time = 0.25f;
-					_animator.SetFloat("Speed", 0);
-					StopPlayerHorizontally();
-				}
-				//_animator.Play("Idle", 0, 0f);
-				Invoke("ForwardAttack", time);
+				//float time = 0f;
+				//if (_animator.GetFloat("Speed") > 0f) {
+				//	time = 0.25f;
+				//	_animator.SetFloat("Speed", 0);
+				//	StopPlayerHorizontally();
+				//}
+				//_animator.Play("NotFullRotation", 1, 0f);
+				_animator.Play("ForwardAttack", 2, 0f);
+				//Invoke("ForwardAttack", time);
 
 			} else if (_isRun && _verticalInput >= 0 && _horizontalInput == 0) {
 				if (_characterController.isGrounded) {
@@ -152,8 +153,8 @@ public class PlayerController : MonoBehaviour {
 	}
 	private void SetAnimatorProperties() {
 		_animator.SetFloat("Speed", _characterController.velocity.magnitude);
-		_animator.SetFloat("VerticalDirections", _verticalInput);
-		_animator.SetFloat("HorizontalDirections", _horizontalInput);
+		_animator.SetFloat("VerticalDirections", _verticalInput, 0.17f, Time.deltaTime );
+		_animator.SetFloat("HorizontalDirections", _horizontalInput, 0.17f, Time.deltaTime);
 		_animator.SetBool("IsRun", _isRun);
 
 	}
