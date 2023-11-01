@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour {
 			if (isIdle) {
 				_animator.SetBool("IsRotation", true);
 			}
+			//float axisResultX = _mouseAxisX < 0f ? -1f: _mouseAxisX >0f ? 1f : 0f;
 			_animator.SetFloat("MouseDirection", Mathf.Clamp(_mouseAxisX * 4, -1, 1), 0.15f, Time.deltaTime);
 			_newPlayerRotation.y += 3 * Mathf.Clamp(_mouseAxisX, -1, 1);
 
