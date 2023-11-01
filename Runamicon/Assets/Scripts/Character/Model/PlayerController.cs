@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Rotation() {
-	  if(_isJump || _isJumpAtack || _isStopAttackOrBlock){ _animator.SetBool("IsRotation", false); return; }
+		if (_isJump || _isJumpAtack || _isStopAttackOrBlock) { _animator.SetBool("IsRotation", false); return; }
 		bool isIdle = isIdleHoriz() && isIdleVertical();
 		if (Input.GetKey(KeyCode.Mouse2)) {
 			if (isIdle) {
@@ -89,11 +89,11 @@ public class PlayerController : MonoBehaviour {
 
 			transform.localRotation = Quaternion.Euler(_newPlayerRotation);
 		}
-		
+
 		if (Input.GetKeyUp(KeyCode.Mouse2) || !isIdle) {
 			_animator.SetBool("IsRotation", false);
 		}
-		
+
 	}
 	private void Move() {
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
@@ -113,9 +113,9 @@ public class PlayerController : MonoBehaviour {
 		_characterController.Move(_newPosition * Time.deltaTime);
 
 		//Debug.Log(_characterController.velocity.magnitude);
-		if (!_isStopAttackOrBlock) {
-			SetAnimatorProperties();
-		}
+
+		SetAnimatorProperties();
+
 	}
 	private void Block() {
 		if (Input.GetKeyDown(KeyCode.Mouse1) && _isAttack == false && !_isJump && !_isBlock) {
@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour {
 				_animator.Play("FullRotation", 1, 0f);
 			} else if (!_isRun && (_verticalInput >= 0 || _horizontalInput != 0)) {
 				int maxRand = 5;
-				if (!isIdleVertical()||!isIdleHoriz()) {
+				if (!isIdleVertical() || !isIdleHoriz()) {
 					maxRand = 4;
 				}
 				int rnd = UnityEngine.Random.Range(0, maxRand);
@@ -181,9 +181,11 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 	private void SetAnimatorProperties() {
-		_animator.SetFloat("Speed", _characterController.velocity.magnitude);
-		_animator.SetFloat("VerticalDirections", _verticalInput, 0.17f, Time.deltaTime);
-		_animator.SetFloat("HorizontalDirections", _horizontalInput, 0.17f, Time.deltaTime);
+		if (!_isStopAttackOrBlock) {
+			_animator.SetFloat("Speed", _characterController.velocity.magnitude);
+			_animator.SetFloat("VerticalDirections", _verticalInput, 0.17f, Time.deltaTime);
+			_animator.SetFloat("HorizontalDirections", _horizontalInput, 0.17f, Time.deltaTime);
+		}
 		_animator.SetBool("IsRun", _isRun);
 
 	}
@@ -220,10 +222,10 @@ public class PlayerController : MonoBehaviour {
 		_newPosition = new Vector3(0f, _newPosition.y, 0f);
 	}
 
-	public bool isIdleHoriz(){
+	public bool isIdleHoriz() {
 		return _horizontalInput > -0.2 && _horizontalInput < 0.2;
 	}
-	public bool isIdleVertical(){
+	public bool isIdleVertical() {
 		return _verticalInput > -0.2 && _verticalInput < 0.2;
 	}
 }
