@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
 	private bool _isJumpAtack;
 	private bool _isAttack;
 	private bool _isJump;
+	private bool _isBlock;
+	private bool _isStopAttackOrBlock;
 
 	//private Direction _direction;
 	private Quaternion _targetRotation;
@@ -54,6 +56,7 @@ public class PlayerController : MonoBehaviour {
 		//_mouseAxisX = Input.GetAxis("Mouse X");
 		//_mouseAxisY = Input.GetAxis("Mouse Y");
 
+		Block();
 		Attack();
 		Move();
 		//Rotation();
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour {
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
 																										Mathf.Abs(_verticalInput) > 0.15f);
 
-		if (!_isAttack) {
+		if (!_isStopAttackOrBlock) {
 			float speed = _isRun ? _runSpeed : _walkSpeed;
 			Vector3 direction = _player.transform.right * _horizontalInput +
 													_player.transform.forward * _verticalInput;
@@ -109,33 +112,58 @@ public class PlayerController : MonoBehaviour {
 		_characterController.Move(_newPosition * Time.deltaTime);
 
 		//Debug.Log(_characterController.velocity.magnitude);
-		if (!_isAttack) {
+		if (!_isStopAttackOrBlock) {
 			SetAnimatorProperties();
 		}
 	}
+	private void Block() {
+		bool isWalkHorizontal = _verticalInput > -0.2 && _verticalInput < 0.2;
+		if (Input.GetKeyDown(KeyCode.Mouse1) && _isAttack == false && !_isJump && !_isBlock) {
+			if (isWalkHorizontal) {
+				_isBlock = true;
+				_animator.Play("BlockStart", 2, 0f);
+			}
+		}
+		if ((Input.GetKeyUp(KeyCode.Mouse1) || !isWalkHorizontal) && _isBlock) {
+			_animator.SetTrigger("BlockEnd");
+		}
+	}
 	private void Attack() {
-		if (Input.GetKeyDown(KeyCode.Mouse0) && _isAttack == false && !_isJump) {
+		if (Input.GetKeyDown(KeyCode.Mouse0) && _isAttack == false && !_isJump && !_isBlock) {
 			_isAttack = true;
 
-			if (_verticalInput < 0) {
-				_animator.Play("AttackWithBackWalk", 2, 0f);
+			if (_verticalInput < 0 && (_horizontalInput > -0.2 && _horizontalInput < 0.2)) {
+				_isStopAttackOrBlock = true;
+				_animator.Play("AttackWithBackWalk", 3, 0f);
 				_animator.Play("FullRotation", 1, 0f);
 			} else if (!_isRun && (_verticalInput >= 0 || _horizontalInput != 0)) {
-				//float time = 0f;
-				//if (_animator.GetFloat("Speed") > 0f) {
-				//	time = 0.25f;
-				//	_animator.SetFloat("Speed", 0);
-				//	StopPlayerHorizontally();
-				//}
-				//_animator.Play("NotFullRotation", 1, 0f);
-				_animator.Play("ForwardAttack", 2, 0f);
-				//Invoke("ForwardAttack", time);
+				int maxRand = 5;
+				if (_verticalInput <= -0.2 || _verticalInput >= 0.2 || _horizontalInput <= -0.2 || _horizontalInput >= 0.2) {
+					maxRand = 4;
+				}
+				int rnd = UnityEngine.Random.Range(0, maxRand);
+				int layer = 2;
+				string name = "";
+				switch (rnd) {
+					case 0: case 1: name = "ForwardAttack1"; break;
+					case 2: case 3: name = "ForwardAttack2"; break;
+					case 4: name = "RotationAttack"; break;
+				}
+
+				if (name == "RotationAttack") {
+					_isStopAttackOrBlock = true;
+					layer = 3;
+					Invoke("setJumpAttackMarker", 0.5f);
+				}
+				_animator.Play(name, layer, 0f);
 
 			} else if (_isRun && _verticalInput >= 0 && _horizontalInput == 0) {
 				if (_characterController.isGrounded) {
-					Invoke("setJumpAttackMarker", 0.3f);
+					_isStopAttackOrBlock = true;
+					float time = 0.3f;
 
-					_animator.Play("AttackWithForwardRun", 2, 0f);
+					Invoke("setJumpAttackMarker", time);
+					_animator.Play("AttackWithForwardRun", 3, 0f);
 				}
 			} else if (_isRun && _horizontalInput != 0) {
 				float time = 0f;
@@ -148,12 +176,13 @@ public class PlayerController : MonoBehaviour {
 				Invoke("ForwardAttack", time);
 			} else {
 				_isAttack = false;
+				_isStopAttackOrBlock = false;
 			}
 		}
 	}
 	private void SetAnimatorProperties() {
 		_animator.SetFloat("Speed", _characterController.velocity.magnitude);
-		_animator.SetFloat("VerticalDirections", _verticalInput, 0.17f, Time.deltaTime );
+		_animator.SetFloat("VerticalDirections", _verticalInput, 0.17f, Time.deltaTime);
 		_animator.SetFloat("HorizontalDirections", _horizontalInput, 0.17f, Time.deltaTime);
 		_animator.SetBool("IsRun", _isRun);
 
@@ -181,6 +210,11 @@ public class PlayerController : MonoBehaviour {
 	}
 	public void SetEndOfAttack() {
 		_isAttack = false;
+		_isStopAttackOrBlock = false;
+	}
+	public void SetEndOfBlock() {
+		_isBlock = false;
+		_isStopAttackOrBlock = false;
 	}
 	public void StopPlayerHorizontally() {
 		_newPosition = new Vector3(0f, _newPosition.y, 0f);

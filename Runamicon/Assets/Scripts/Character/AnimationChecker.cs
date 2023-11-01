@@ -12,6 +12,9 @@ public class AnimationChecker : MonoBehaviour
 	public void SetEndOfAttack() {
 		playerController.SetEndOfAttack();
 	}
+	public void SetEndOfBlock() {
+		playerController.SetEndOfBlock();
+	}
 	public void StopPlayerHorizontally(){
      playerController.StopPlayerHorizontally();
 	}
