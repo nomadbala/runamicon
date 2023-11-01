@@ -181,7 +181,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 215b4cc671e8754419ff21b58f7d3b75, type: 3}
+    m_Font: {fileID: 12800000, guid: b259160e97f51b645881b4fc1aac7447, type: 3}
     m_FontSize: 40
     m_FontStyle: 2
     m_BestFit: 0
@@ -866,6 +866,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8164c51d2641814da44d473d4bdda87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainPanel: {fileID: 845289318}
+  _settingsPanel: {fileID: 263836349}
+  _difficultySlider: {fileID: 348665671}
+  _musicValueSlider: {fileID: 874656585}
 --- !u!1 &522868867
 GameObject:
   m_ObjectHideFlags: 0
