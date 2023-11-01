@@ -87,6 +87,7 @@ NavMeshProjectSettings:
     buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
+    accuratePlacement: 0
     debug:
       m_Flags: 0
   m_SettingNames:
