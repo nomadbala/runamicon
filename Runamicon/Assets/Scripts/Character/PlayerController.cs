@@ -53,13 +53,15 @@ public class PlayerController : MonoBehaviour {
 		_horizontalInput = Input.GetAxis("Horizontal");
 		_verticalInput = Input.GetAxis("Vertical");
 		//Debug.Log(_horizontalInput + "   " + _verticalInput);
-		//_mouseAxisX = Input.GetAxis("Mouse X");
-		//_mouseAxisY = Input.GetAxis("Mouse Y");
+		_mouseAxisX = Input.GetAxis("Mouse X");
+		_mouseAxisY = Input.GetAxis("Mouse Y");
 
 		Block();
 		Attack();
 		Move();
-		//Rotation();
+		Rotation();
+
+
 	}
 	private void setJumpAttackMarker() {
 		_isJumpAtack = true;
@@ -75,24 +77,22 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Rotation() {
+	  if(_isJump || _isJumpAtack || _isStopAttackOrBlock){ _animator.SetBool("IsRotation", false); return; }
+		bool isIdle = isIdleHoriz() && isIdleVertical();
+		if (Input.GetKey(KeyCode.Mouse2)) {
+			if (isIdle) {
+				_animator.SetBool("IsRotation", true);
+			}
+			_animator.SetFloat("MouseDirection", Mathf.Clamp(_mouseAxisX * 4, -1, 1), 0.15f, Time.deltaTime);
+			_newPlayerRotation.y += 3 * Mathf.Clamp(_mouseAxisX, -1, 1);
 
-		//rotationX += _horizontalInput * 300 * Time.deltaTime;
-		//rotationX = Mathf.Clamp(rotationX, 0, 360); // Ограничение угла поворота
-		//Debug.Log(_horizontalInput + "   " + _verticalInput);
-		//if (_verticalInput > 0.1 || _verticalInput < 0.1) {
-
-		//	if (rotationX > 0) {
-
-		//		rotationX -= Mathf.Abs(_verticalInput) * 1000 * Time.deltaTime;
-		//		rotationX = Mathf.Clamp(rotationX, 0, 90);
-		//	} else if (rotationX < 0) {
-
-		//		rotationX += Mathf.Abs(_verticalInput) * 1000 * Time.deltaTime;
-		//		rotationX = Mathf.Clamp(rotationX, -90, 0);
-		//	}
-		//}
-		//_player.transform.rotation = Quaternion.Euler(0, rotationX, 0);
-
+			transform.localRotation = Quaternion.Euler(_newPlayerRotation);
+		}
+		
+		if (Input.GetKeyUp(KeyCode.Mouse2) || !isIdle) {
+			_animator.SetBool("IsRotation", false);
+		}
+		
 	}
 	private void Move() {
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
@@ -117,14 +117,13 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 	private void Block() {
-		bool isWalkHorizontal = _verticalInput > -0.2 && _verticalInput < 0.2;
 		if (Input.GetKeyDown(KeyCode.Mouse1) && _isAttack == false && !_isJump && !_isBlock) {
-			if (isWalkHorizontal) {
+			if (isIdleVertical()) {
 				_isBlock = true;
 				_animator.Play("BlockStart", 2, 0f);
 			}
 		}
-		if ((Input.GetKeyUp(KeyCode.Mouse1) || !isWalkHorizontal) && _isBlock) {
+		if ((Input.GetKeyUp(KeyCode.Mouse1) || !isIdleVertical()) && _isBlock) {
 			_animator.SetTrigger("BlockEnd");
 		}
 	}
@@ -132,13 +131,13 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Mouse0) && _isAttack == false && !_isJump && !_isBlock) {
 			_isAttack = true;
 
-			if (_verticalInput < 0 && (_horizontalInput > -0.2 && _horizontalInput < 0.2)) {
+			if (_verticalInput < 0 && isIdleHoriz()) {
 				_isStopAttackOrBlock = true;
 				_animator.Play("AttackWithBackWalk", 3, 0f);
 				_animator.Play("FullRotation", 1, 0f);
 			} else if (!_isRun && (_verticalInput >= 0 || _horizontalInput != 0)) {
 				int maxRand = 5;
-				if (_verticalInput <= -0.2 || _verticalInput >= 0.2 || _horizontalInput <= -0.2 || _horizontalInput >= 0.2) {
+				if (!isIdleVertical()||!isIdleHoriz()) {
 					maxRand = 4;
 				}
 				int rnd = UnityEngine.Random.Range(0, maxRand);
@@ -218,6 +217,13 @@ public class PlayerController : MonoBehaviour {
 	}
 	public void StopPlayerHorizontally() {
 		_newPosition = new Vector3(0f, _newPosition.y, 0f);
+	}
+
+	public bool isIdleHoriz(){
+		return _horizontalInput > -0.2 && _horizontalInput < 0.2;
+	}
+	public bool isIdleVertical(){
+		return _verticalInput > -0.2 && _verticalInput < 0.2;
 	}
 }
 
