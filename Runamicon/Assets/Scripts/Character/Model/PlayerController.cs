@@ -10,9 +10,11 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private float _walkSpeed;
 	[SerializeField] private float _runSpeed;
 	[SerializeField] private float _jumpHeight;
+	[SerializeField] private LayerMask _notPlayerMask;
 
 
 	[SerializeField] private GameObject _player;
+	[SerializeField] private Transform _groundChecker;
 
 	private CharacterController _characterController;
 	private Animator _animator;
@@ -60,11 +62,19 @@ public class PlayerController : MonoBehaviour {
 		Attack();
 		Move();
 		Rotation();
-
+		CheckForFall();
 
 	}
 	private void setJumpAttackMarker() {
 		_isJumpAtack = true;
+	}
+	
+	private void CheckForFall(){
+		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask)) {
+			_animator.SetBool("IsFalling", false);
+		} else {
+			_animator.SetBool("IsFalling", true);
+		}
 	}
 
 	private void ForwardAttack() {
@@ -95,6 +105,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 	}
+	float H = 0;
 	private void Move() {
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
 																										Mathf.Abs(_verticalInput) > 0.15f);
@@ -198,6 +209,7 @@ public class PlayerController : MonoBehaviour {
 				} else {
 					_isJump = true;
 					_animator.SetTrigger("IsJump");
+					_animator.SetBool("IsFalling", false);
 				}
 				_newPosition.y = _jumpHeight;
 			} else {

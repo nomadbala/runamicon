@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 185fc0d5baccf714fae12504510db3e3
+guid: fc00c89b346a5f648bb874ca0c31281d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RightTurn
+      name: JumpFromIdle
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 28
+      firstFrame: 3.2
+      lastFrame: 29
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
