@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour {
 					case 2: case 3: name = "ForwardAttack2"; break;
 				}
 				_animator.Play(name, layer, 0f);
-				//
+				////
 			} else {
 				_isAttack = false;
 				_isStopAttackOrBlock = false;
