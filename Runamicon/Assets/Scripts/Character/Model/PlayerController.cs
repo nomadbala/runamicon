@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void ForwardAttack() {
-		_animator.Play("ForwardAttack", 2, 0f);
+		_animator.Play("ForwardAttack1", 2, 0f);
 		_animator.Play("NotFullRotation", 1, 0f);
 	}
 	private void BackwardAttack() {
@@ -177,14 +177,16 @@ public class PlayerController : MonoBehaviour {
 					_animator.Play("AttackWithForwardRun", 3, 0f);
 				}
 			} else if (_isRun && _horizontalInput != 0) {
-				float time = 0f;
-				if (_animator.GetFloat("Speed") > 0f) {
-					time = 0.5f;
-					_animator.SetFloat("Speed", 0);
-					_animator.SetBool("IsRun", false);
-					StopPlayerHorizontally();
+				int maxRand = 4;
+				int rnd = UnityEngine.Random.Range(0, maxRand);
+				int layer = 2;
+				string name = "";
+				switch (rnd) {
+					case 0: case 1: name = "ForwardAttack1"; break;
+					case 2: case 3: name = "ForwardAttack2"; break;
 				}
-				Invoke("ForwardAttack", time);
+				_animator.Play(name, layer, 0f);
+				//
 			} else {
 				_isAttack = false;
 				_isStopAttackOrBlock = false;
