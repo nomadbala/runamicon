@@ -24,7 +24,10 @@ public class MobPatrol : State
         _targetPoint = transform.position + new Vector3(Random.Range(-15, 15), 0, Random.Range(-15, 15));
 
         NavMeshAgent.SetDestination(_targetPoint);
-        _mobStateMachine.IsWalking = true;
+        _mobStateMachine.isWalking = true;
+#if(UNITY_EDITOR)
+        Debug.Log("MOB PATROL ENTER");
+#endif
     }
 
     public override StateType GetStateType() => StateType.Patrol;
@@ -43,12 +46,17 @@ public class MobPatrol : State
             _mobStateMachine.NavMeshAgent.SetDestination(_mobStateMachine.Target.position);
             return StateType.Follow;
         }
+        if (_mobStateMachine.isDead)
+            return StateType.Dead;
 
         return StateType.Patrol;
     }
 
     public override void Exit()
     {
-        _mobStateMachine.IsWalking = false;
+        _mobStateMachine.isWalking = false;
+#if (UNITY_EDITOR)
+        Debug.Log("MOB PATROL EXIT");
+#endif
     }
 }

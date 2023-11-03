@@ -9,8 +9,12 @@ public class MobFollow : State
         if (StateMachine == null) return;
 
         _mobStateMachine = StateMachine as MobStateMachine;
-        _mobStateMachine.IsWalking = false;
+        _mobStateMachine.isWalking = false;
         _mobStateMachine.isRunning = true;
+
+#if(UNITY_EDITOR)
+        Debug.Log("MOB FOLLOW ENTER");
+#endif
     }
 
     public override StateType GetStateType() => StateType.Follow;
@@ -22,12 +26,17 @@ public class MobFollow : State
             _mobStateMachine.NavMeshAgent.SetDestination(_mobStateMachine.Target.position);
             return StateType.Follow;
         }
+        if (_mobStateMachine.isDead)
+            return StateType.Dead;
         return StateType.Patrol;
     }
 
     public override void Exit()
     {
-        _mobStateMachine.IsWalking = true;
+        _mobStateMachine.isWalking = true;
         _mobStateMachine.isRunning = false;
+#if (UNITY_EDITOR)
+        Debug.Log("MOB FOLLOW EXIT");
+#endif
     }
 }

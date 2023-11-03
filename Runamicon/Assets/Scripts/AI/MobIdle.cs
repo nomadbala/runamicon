@@ -13,6 +13,10 @@ public class MobIdle : State
         if (StateMachine == null) return;
         _currentTime = _idleTime;
         _mobStateMachine = StateMachine as MobStateMachine;
+
+#if(UNITY_EDITOR)
+        Debug.Log("MOB IDLE ENTER");
+#endif
     }
 
     public override StateType GetStateType() => StateType.Idle;
@@ -20,12 +24,25 @@ public class MobIdle : State
     public override StateType StateUpdate()
     {
         _currentTime -= Time.deltaTime;
+
         if (_currentTime <= 0)
+        {
+#if (UNITY_EDITOR)
+            Debug.Log("Idle return patrol");
+#endif
             return StateType.Patrol;
+        }
+
         if (_mobStateMachine.Target)
         {
-            _mobStateMachine.NavMeshAgent.SetDestination(_mobStateMachine.Target.position);
+#if (UNITY_EDITOR)
+            Debug.Log("Idle return follow");
+#endif
             return StateType.Follow;
+        }
+        if (_mobStateMachine.isDead)
+        {
+            return StateType.Dead;
         }
         return StateType.Idle;
     }
