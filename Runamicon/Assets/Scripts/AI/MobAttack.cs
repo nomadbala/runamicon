@@ -8,6 +8,8 @@ public class MobAttack : State
 
     private MobStateMachine _mobStateMachine;
 
+    private int damage = 50;
+
     public override void Enter()
     {
         if (StateMachine == null) return;
@@ -15,9 +17,12 @@ public class MobAttack : State
         // _currentTime = _timeDelay;
 
         _mobStateMachine = StateMachine as MobStateMachine;
-        _mobStateMachine.IsWalking = false;
+        _mobStateMachine.isWalking = false;
         _mobStateMachine.isRunning = false;
         _mobStateMachine.isAttacking = true;
+#if(UNITY_EDITOR)
+        Debug.Log("MOB ATTACK ENTER");
+#endif
     }
 
     public override StateType GetStateType() => StateType.Attack;
@@ -26,20 +31,19 @@ public class MobAttack : State
     {
         if (_mobStateMachine.Target && _mobStateMachine.isAttacking)
         {
-            // _currentTime -= Time.deltaTime;
-            // if (_currentTime <= 0)
-            // {
-            //     _mobStateMachine.Animator.Play("attack");
-            // }
             return StateType.Attack;
         }
+        if (_mobStateMachine.isDead)
+            return StateType.Dead;
         return StateType.Follow;
     }
 
     public override void Exit()
     {
-        _mobStateMachine.IsWalking = true;
+        _mobStateMachine.isWalking = true;
         _mobStateMachine.isRunning = false;
-        _mobStateMachine.isRunning = false;
+#if (UNITY_EDITOR)
+        Debug.Log("MOB ATTACK EXIT");
+#endif
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - CineMachineIgnore
   - Ground
   - Null
+  - Mob
   layers:
   - Default
   - TransparentFX

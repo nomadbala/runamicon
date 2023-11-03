@@ -11,6 +11,8 @@ public class MobStateMachine : StateMachine
 
     private int _attackingParameterHash = Animator.StringToHash("Attacking");
 
+    private int _deadParameterHash = Animator.StringToHash("Dead");
+
     private Animator _animator;
 
     public Animator Animator => _animator;
@@ -23,11 +25,23 @@ public class MobStateMachine : StateMachine
 
     public Transform Target { get => _target; set => _target = value; }
 
-    public bool IsWalking { get; set; }
+    public bool isWalking { get; set; }
 
     public bool isRunning { get; set; }
 
     public bool isAttacking { get; set; }
+
+    public bool isDead { get; set; }
+
+    public void HitMob()
+    {
+        _animator.SetTrigger("Hit");
+    }
+
+    public void Deactive()
+    {
+
+    }
 
     public override void Awake()
     {
@@ -42,8 +56,10 @@ public class MobStateMachine : StateMachine
 
         if (_animator is null) return;
 
-        _animator.SetBool(_walkingParameterHash, IsWalking);
+        _animator.SetBool(_walkingParameterHash, isWalking);
         _animator.SetBool(_runningParameterHash, isRunning);
         _animator.SetBool(_attackingParameterHash, isAttacking);
+        if (_animator.GetBool(_deadParameterHash) != isDead)
+            _animator.SetBool(_deadParameterHash, isDead);
     }
 }

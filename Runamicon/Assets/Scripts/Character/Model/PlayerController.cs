@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEditor.Experimental.GraphView.GraphView;
@@ -46,7 +47,12 @@ public class PlayerController : MonoBehaviour {
 	[Header("Gravity Parameters")]
 	[SerializeField] private float _stickToGroundForce;
 	[SerializeField] private float _gravityMultiplier;
-	private void Awake() {
+
+
+	public bool isDead { get; set; }
+
+	private void Awake()
+	{
 		_characterController = GetComponent<CharacterController>();
 		_animator = GetComponentInChildren<Animator>();
 		_rotationAngle = 0f;
@@ -73,19 +79,31 @@ public class PlayerController : MonoBehaviour {
 
 		
 	}
-	private void setJumpAttackMarker() {
+
+
+	private void OnCollisionEnter(Collision other)
+	{
+	}
+
+	private void setJumpAttackMarker()
+	{
 		_isJumpAtack = true;
 	}
 
-	private void CheckForFall() {
-		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask)) {
+	private void CheckForFall()
+	{
+		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask))
+		{
 			_animator.SetBool("IsFalling", false);
-		} else {
+		}
+		else
+		{
 			_animator.SetBool("IsFalling", true);
 		}
 	}
 
-	private void ForwardAttack() {
+	private void ForwardAttack()
+	{
 		_animator.Play("ForwardAttack1", 2, 0f);
 		_animator.Play("NotFullRotation", 1, 0f);
 	}
@@ -131,7 +149,9 @@ public class PlayerController : MonoBehaviour {
 		_animator.Play("StandartImpact", 4, 0f);
 		}
 	}
+
 	private void Move() {
+
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
 																										Mathf.Abs(_verticalInput) > 0.15f);
 
@@ -202,18 +222,23 @@ public class PlayerController : MonoBehaviour {
 					Invoke("setJumpAttackMarker", time);
 					_animator.Play("AttackWithForwardRun", 3, 0f);
 				}
-			} else if (_isRun && _horizontalInput != 0) {
+			}
+			else if (_isRun && _horizontalInput != 0)
+			{
 				int maxRand = 4;
 				int rnd = UnityEngine.Random.Range(0, maxRand);
 				int layer = 2;
 				string name = "";
-				switch (rnd) {
+				switch (rnd)
+				{
 					case 0: case 1: name = "ForwardAttack1"; break;
 					case 2: case 3: name = "ForwardAttack2"; break;
 				}
 				_animator.Play(name, layer, 0f);
 				////
-			} else {
+			}
+			else
+			{
 				_isAttack = false;
 				_isStopAttackOrBlock = false;
 			}
