@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1914168, g: 0.47056416, b: 0.44375834, a: 1}
+  m_IndirectSpecularColor: {r: 0.19141653, g: 0.47056383, b: 0.44375747, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8866,8 +8866,8 @@ Transform:
   m_GameObject: {fileID: 492695001}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 220.4, y: 35.567, z: 74.7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 220.4, y: 34.01, z: 75.42}
+  m_LocalScale: {x: 1, y: 4.2216, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -8969,6 +8969,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _currentHealth: 0
+--- !u!114 &497126915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497126903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db659cc131057ba4c91e41a4734f40d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &499162402
 GameObject:
   m_ObjectHideFlags: 0
@@ -18295,8 +18307,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077692227}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.02191049, y: -0.655786, z: 0.019129254, w: 0.7543863}
-  m_LocalPosition: {x: -73.80368, y: 39.302876, z: -170.61472}
+  m_LocalRotation: {x: 0.25455585, y: -0.27177772, z: -0.07468809, w: -0.9250729}
+  m_LocalPosition: {x: -77.431335, y: 38.910347, z: -173.15639}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19164,8 +19176,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180869190}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 218.59062, y: 28.733337, z: 65.24413}
+  m_LocalRotation: {x: -0.26094297, y: -0.0036191645, z: -0.0010746492, w: 0.9653469}
+  m_LocalPosition: {x: 222.50029, y: 23.450989, z: 63.71435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40029,6 +40041,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1902182692586617802, guid: c23dd0129af758a4086088dcdea83fce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 497126909}
+    - targetCorrespondingSourceObject: {fileID: 1902182692586617802, guid: c23dd0129af758a4086088dcdea83fce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 497126915}
   m_SourcePrefab: {fileID: 100100000, guid: c23dd0129af758a4086088dcdea83fce, type: 3}
 --- !u!1001 &2031908883
 PrefabInstance:

@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour {
 	private bool _isJump;
 	private bool _isBlock;
 	private bool _isStopAttackOrBlock;
-	private bool _isDead;
 
 	//private Direction _direction;
 	private Quaternion _targetRotation;
@@ -49,10 +48,9 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private float _gravityMultiplier;
 
 
-	public bool isDead { get; set; }
+	public bool _isDead { get; set; }
 
-	private void Awake()
-	{
+	private void Awake() {
 		_characterController = GetComponent<CharacterController>();
 		_animator = GetComponentInChildren<Animator>();
 		_rotationAngle = 0f;
@@ -72,38 +70,29 @@ public class PlayerController : MonoBehaviour {
 			Move();
 			Rotation();
 
-			CheckDeath();
-			CheckImpact();
 		}
 		CheckForFall();
 
-		
+
 	}
 
 
-	private void OnCollisionEnter(Collision other)
-	{
+	private void OnCollisionEnter(Collision other) {
 	}
 
-	private void setJumpAttackMarker()
-	{
+	private void setJumpAttackMarker() {
 		_isJumpAtack = true;
 	}
 
-	private void CheckForFall()
-	{
-		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask))
-		{
+	private void CheckForFall() {
+		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask)) {
 			_animator.SetBool("IsFalling", false);
-		}
-		else
-		{
+		} else {
 			_animator.SetBool("IsFalling", true);
 		}
 	}
 
-	private void ForwardAttack()
-	{
+	private void ForwardAttack() {
 		_animator.Play("ForwardAttack1", 2, 0f);
 		_animator.Play("NotFullRotation", 1, 0f);
 	}
@@ -132,23 +121,6 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-	private void CheckDeath() {
-		if (!Input.GetKeyDown(KeyCode.O) || !_characterController.isGrounded) { return; }
-		_isDead = true;
-		_animator.SetTrigger("IsDead");
-
-
-	}
-	private void CheckImpact(){
-		if (!Input.GetKeyDown(KeyCode.I)) { return; }
-		if(_isBlock){
-		_animator.Play("BlockingImpact", 4, 0f);
-
-		}else{
-
-		_animator.Play("StandartImpact", 4, 0f);
-		}
-	}
 
 	private void Move() {
 
@@ -222,23 +194,18 @@ public class PlayerController : MonoBehaviour {
 					Invoke("setJumpAttackMarker", time);
 					_animator.Play("AttackWithForwardRun", 3, 0f);
 				}
-			}
-			else if (_isRun && _horizontalInput != 0)
-			{
+			} else if (_isRun && _horizontalInput != 0) {
 				int maxRand = 4;
 				int rnd = UnityEngine.Random.Range(0, maxRand);
 				int layer = 2;
 				string name = "";
-				switch (rnd)
-				{
+				switch (rnd) {
 					case 0: case 1: name = "ForwardAttack1"; break;
 					case 2: case 3: name = "ForwardAttack2"; break;
 				}
 				_animator.Play(name, layer, 0f);
 				////
-			}
-			else
-			{
+			} else {
 				_isAttack = false;
 				_isStopAttackOrBlock = false;
 			}
@@ -293,6 +260,27 @@ public class PlayerController : MonoBehaviour {
 	public bool isIdleVertical() {
 		return _verticalInput > -0.2 && _verticalInput < 0.2;
 	}
+
+
+	public void DeathAnimation() {
+		if (!_characterController.isGrounded || _isDead) { return; }
+		
+		_animator.SetBool("IsDeadBool", true);
+		_animator.SetTrigger("IsDead");
+		_isDead = true;
+
+
+	}
+	public void ImpactAnimation() {
+		if (_isBlock) {
+			_animator.Play("BlockingImpact", 4, 0f);
+
+		} else {
+
+			_animator.Play("StandartImpact", 4, 0f);
+		}
+	}
+
 }
 
 public enum Direction {

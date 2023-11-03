@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-	public int _damage = 25;
+	[SerializeField] private float _damage;
 
-	private void OnTriggerEnter(Collider other)
-	{
+	private void Awake() {
+		_damage = 25.0f;
+	}
+	private void OnTriggerEnter(Collider other) {
+
 		// if (other.gameObject.GetComponent<PlayerController>() is null)
 		// {
 
@@ -31,13 +34,13 @@ public class Sword : MonoBehaviour
 		{
 			return;
 		}
-
 		var mobStateMachine = other.GetComponent<MobStateMachine>();
 
 		mobStateMachine.GetComponent<MobHealth>().TakeDamage(_damage);
 		mobStateMachine.Animator.Play("hit");
+
 #if (UNITY_EDITOR)
-		Debug.Log(_damage);
+		Debug.Log("Player damage: "+_damage);
 #endif
 
 		// Debug.Log(mobStateMachine is null);

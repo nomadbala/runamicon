@@ -1,20 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerHealth : Health
-{
-    public override void TakeDamage(int damage)
-    {
+public class PlayerHealth : Health {
+	private Intermediary _intermediary;
+	private void Awake() {
+		_intermediary = GetComponent<Intermediary>();
+	}
+	public override void TakeDamage(float damage) {
 #if (UNITY_EDITOR)
-        Debug.Log($"mob takes damage {damage}");
+		Debug.Log($"Player takes damage {damage}");
 #endif
-        _currentHealth -= damage;
 
-        Debug.Log(_currentHealth);
 
-        if (_currentHealth <= 0) // Чел сдох или нет
-        {
-            SceneManager.LoadScene("MainMenuScene");
-        }
-    }
+		_currentHealth -= damage;
+
+		Debug.Log(_currentHealth);
+
+		if (_currentHealth <= 0) // Чел сдох или нет
+		{
+			_intermediary.DeathAnimation();
+			//SceneManager.LoadScene("MainMenuScene");
+		} else {
+			_intermediary.ImpactAnimation();
+		}
+	}
 }

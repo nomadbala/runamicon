@@ -2,14 +2,14 @@ using UnityEngine;
 
 public abstract class Health : MonoBehaviour
 {
-    [SerializeField] public int _maxHealth;
+    [SerializeField] public float _maxHealth;
 
-    public int _currentHealth;
-
+    public float _currentHealth;
+    
     private void Start()
     {
         _currentHealth = _maxHealth;
     }
 
-    public abstract void TakeDamage(int damage);
+    public abstract void TakeDamage(float damage);
 }
