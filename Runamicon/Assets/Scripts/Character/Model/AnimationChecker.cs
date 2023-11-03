@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationChecker : MonoBehaviour
-{
-  [SerializeField] private GameObject _sword;
-  private PlayerController _playerController;
-
+public class AnimationChecker : MonoBehaviour {
+	[SerializeField] private GameObject _sword;
+	private PlayerController _playerController;
+	private Sword _swordScript;
 	private void Awake() {
-		_playerController=GetComponentInParent<PlayerController>();
+		_playerController = GetComponentInParent<PlayerController>();
 		_sword.GetComponent<CapsuleCollider>().enabled = false;
+		_swordScript = GetComponentInParent<Sword>();
 	}
 	public void SetEndOfAttack() {
 		_playerController.SetEndOfAttack();
@@ -17,14 +17,15 @@ public class AnimationChecker : MonoBehaviour
 	public void SetEndOfBlock() {
 		_playerController.SetEndOfBlock();
 	}
-	public void StopPlayerHorizontally(){
-     _playerController.StopPlayerHorizontally();
+	public void StopPlayerHorizontally() {
+		_playerController.StopPlayerHorizontally();
 	}
-	
-	public void ActiveCollider(){
+
+	public void ActiveCollider() {
 		_sword.GetComponent<CapsuleCollider>().enabled = true;
 	}
-	public void DeActivateCollider(){
+	public void DeActivateCollider() {
+
 		_sword.GetComponent<CapsuleCollider>().enabled = false;
 
 	}

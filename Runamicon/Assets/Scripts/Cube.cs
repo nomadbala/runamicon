@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-  [SerializeField] private Material first;
-  [SerializeField] private Material second;
-  public void SetDefaultMaterial(){
-    GetComponent<Material>().color = Color.white;
-  }
-  public void SetSecondMaterial(){
-    
-    GetComponent<Material>().color = Color.red;
+
+  public Color getColor(){
+    return GetComponent<Renderer>().material.color;
+	}
+  public void SetMaterial(Color color){
+
+		GetComponent<Renderer>().material.color = color;
   }
 }

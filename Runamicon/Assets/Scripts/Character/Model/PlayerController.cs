@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float _walkSpeed;
 	[SerializeField] private float _runSpeed;
 	[SerializeField] private float _jumpHeight;
+	[SerializeField] private LayerMask _notPlayerMask;
 
 
 	[SerializeField] private GameObject _player;
+	[SerializeField] private Transform _groundChecker;
 
 	private CharacterController _characterController;
 	private Animator _animator;
@@ -63,17 +65,24 @@ public class PlayerController : MonoBehaviour
 		Attack();
 		Move();
 		Rotation();
-
+		CheckForFall();
 
 	}
 	private void setJumpAttackMarker()
 	{
 		_isJumpAtack = true;
 	}
+	
+	private void CheckForFall(){
+		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask)) {
+			_animator.SetBool("IsFalling", false);
+		} else {
+			_animator.SetBool("IsFalling", true);
+		}
+	}
 
-	private void ForwardAttack()
-	{
-		_animator.Play("ForwardAttack", 2, 0f);
+	private void ForwardAttack() {
+		_animator.Play("ForwardAttack1", 2, 0f);
 		_animator.Play("NotFullRotation", 1, 0f);
 	}
 	private void BackwardAttack()
@@ -104,8 +113,8 @@ public class PlayerController : MonoBehaviour
 		// }
 
 	}
-	private void Move()
-	{
+	float H = 0;
+	private void Move() {
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
 																										Mathf.Abs(_verticalInput) > 0.15f);
 
@@ -191,21 +200,18 @@ public class PlayerController : MonoBehaviour
 					Invoke("setJumpAttackMarker", time);
 					_animator.Play("AttackWithForwardRun", 3, 0f);
 				}
-			}
-			else if (_isRun && _horizontalInput != 0)
-			{
-				float time = 0f;
-				if (_animator.GetFloat("Speed") > 0f)
-				{
-					time = 0.5f;
-					_animator.SetFloat("Speed", 0);
-					_animator.SetBool("IsRun", false);
-					StopPlayerHorizontally();
+			} else if (_isRun && _horizontalInput != 0) {
+				int maxRand = 4;
+				int rnd = UnityEngine.Random.Range(0, maxRand);
+				int layer = 2;
+				string name = "";
+				switch (rnd) {
+					case 0: case 1: name = "ForwardAttack1"; break;
+					case 2: case 3: name = "ForwardAttack2"; break;
 				}
-				Invoke("ForwardAttack", time);
-			}
-			else
-			{
+				_animator.Play(name, layer, 0f);
+				////
+			} else {
 				_isAttack = false;
 				_isStopAttackOrBlock = false;
 			}
@@ -237,6 +243,7 @@ public class PlayerController : MonoBehaviour
 				{
 					_isJump = true;
 					_animator.SetTrigger("IsJump");
+					_animator.SetBool("IsFalling", false);
 				}
 				_newPosition.y = _jumpHeight;
 			}
