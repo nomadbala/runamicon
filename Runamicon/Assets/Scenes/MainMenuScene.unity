@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -181,7 +181,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b259160e97f51b645881b4fc1aac7447, type: 3}
+    m_Font: {fileID: 12800000, guid: 4a891b135106d194b898ee3e1fc39e13, type: 3}
     m_FontSize: 40
     m_FontStyle: 2
     m_BestFit: 0
@@ -422,8 +422,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 526.5, y: -293.5}
-  m_SizeDelta: {x: 1053, y: 587}
+  m_AnchoredPosition: {x: 542, y: -314}
+  m_SizeDelta: {x: 1084, y: 628}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &263836351
 MonoBehaviour:
@@ -648,7 +648,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: dac8221cdf32fcc45a30fdfa1c308211, type: 3}
+    m_Font: {fileID: 12800000, guid: 4a891b135106d194b898ee3e1fc39e13, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
@@ -727,7 +727,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: dac8221cdf32fcc45a30fdfa1c308211, type: 3}
+    m_Font: {fileID: 12800000, guid: 4a891b135106d194b898ee3e1fc39e13, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 0
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 472481264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8164c51d2641814da44d473d4bdda87, type: 3}
+  m_Script: {fileID: 11500000, guid: 4561680748647a34b8fa54c57c68664c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _mainPanel: {fileID: 845289318}
@@ -1020,7 +1020,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 215b4cc671e8754419ff21b58f7d3b75, type: 3}
+    m_Font: {fileID: 12800000, guid: b259160e97f51b645881b4fc1aac7447, type: 3}
     m_FontSize: 40
     m_FontStyle: 2
     m_BestFit: 0
@@ -1109,9 +1109,9 @@ MonoBehaviour:
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: c744b286bbf73504aa247ead058b7b31, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: b47ecadbe6b561742b581f84441c8cea, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1156,7 +1156,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a06c21aac8c1ae4c924b61da7a85498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d89f08cf778bdc419f2c1f187d224c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1317,9 +1317,9 @@ MonoBehaviour:
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: c744b286bbf73504aa247ead058b7b31, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: b47ecadbe6b561742b581f84441c8cea, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1364,7 +1364,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a06c21aac8c1ae4c924b61da7a85498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d89f08cf778bdc419f2c1f187d224c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1419,8 +1419,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 526.5, y: -293.5}
-  m_SizeDelta: {x: 1053, y: 587}
+  m_AnchoredPosition: {x: 542.00006, y: -314}
+  m_SizeDelta: {x: 1084, y: 628}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &845289320
 MonoBehaviour:
@@ -1849,7 +1849,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 215b4cc671e8754419ff21b58f7d3b75, type: 3}
+    m_Font: {fileID: 12800000, guid: 4a891b135106d194b898ee3e1fc39e13, type: 3}
     m_FontSize: 40
     m_FontStyle: 2
     m_BestFit: 0
@@ -1930,7 +1930,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 215b4cc671e8754419ff21b58f7d3b75, type: 3}
+    m_Font: {fileID: 12800000, guid: b259160e97f51b645881b4fc1aac7447, type: 3}
     m_FontSize: 40
     m_FontStyle: 2
     m_BestFit: 0
@@ -2019,9 +2019,9 @@ MonoBehaviour:
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: c744b286bbf73504aa247ead058b7b31, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: b47ecadbe6b561742b581f84441c8cea, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2066,7 +2066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a06c21aac8c1ae4c924b61da7a85498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d89f08cf778bdc419f2c1f187d224c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2224,9 +2224,9 @@ MonoBehaviour:
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: c744b286bbf73504aa247ead058b7b31, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: b47ecadbe6b561742b581f84441c8cea, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2271,7 +2271,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a06c21aac8c1ae4c924b61da7a85498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d89f08cf778bdc419f2c1f187d224c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2347,7 +2347,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 215b4cc671e8754419ff21b58f7d3b75, type: 3}
+    m_Font: {fileID: 12800000, guid: b259160e97f51b645881b4fc1aac7447, type: 3}
     m_FontSize: 40
     m_FontStyle: 2
     m_BestFit: 0
@@ -2586,9 +2586,9 @@ MonoBehaviour:
     m_ColorMultiplier: 5
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: c744b286bbf73504aa247ead058b7b31, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: a0f1d6dcb1238dd4b8214b65558689e5, type: 3}
+    m_HighlightedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: b47ecadbe6b561742b581f84441c8cea, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: e403e56691f98104dbd2b4b9fb892a35, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2621,7 +2621,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a06c21aac8c1ae4c924b61da7a85498, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d89f08cf778bdc419f2c1f187d224c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
