@@ -103,8 +103,10 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void RotationY(){
-     //if(!Input.GetKey(KeyCode.Mouse2)){ return; }
-		_newPlayerRotation.x += 3 * _mouseAxisY;
+    //if(!Input.GetKey(KeyCode.Mouse2)){ return; }
+		_newPlayerRotation.x += -2.5f * _mouseAxisY;
+		_newPlayerRotation.x = Mathf.Clamp(_newPlayerRotation.x, -70, 80);
+		Debug.Log(_newPlayerRotation.x);
 		_rotateObject.localRotation = Quaternion.Euler(_newPlayerRotation.x,0f,0f);
 	}
 	private void RotationX() {
