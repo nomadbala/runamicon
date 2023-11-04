@@ -6,6 +6,10 @@ public class PlayerHealth : Health {
 	private void Awake() {
 		_intermediary = GetComponent<Intermediary>();
 	}
+
+	private void Update() {
+		//Debug.Log(_currentHealth);
+	}
 	public override void TakeDamage(float damage) {
 #if (UNITY_EDITOR)
 		Debug.Log($"Player takes damage {damage}");
