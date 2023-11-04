@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private LayerMask _notPlayerMask;
 
 
+	[SerializeField] private Transform _rotateObject;
 	[SerializeField] private GameObject _player;
 	[SerializeField] private Transform _groundChecker;
 
@@ -68,8 +69,8 @@ public class PlayerController : MonoBehaviour {
 			Block();
 			Attack();
 			Move();
-			Rotation();
-
+			RotationX();
+			RotationY();
 		}
 		CheckForFall();
 
@@ -101,10 +102,15 @@ public class PlayerController : MonoBehaviour {
 		_animator.Play("FullRotation", 1, 0f);
 	}
 
-	private void Rotation() {
+	private void RotationY(){
+     //if(!Input.GetKey(KeyCode.Mouse2)){ return; }
+		_newPlayerRotation.x += 3 * _mouseAxisY;
+		_rotateObject.localRotation = Quaternion.Euler(_newPlayerRotation.x,0f,0f);
+	}
+	private void RotationX() {
 		if (_isJump || _isJumpAtack || _isStopAttackOrBlock) { _animator.SetBool("IsRotation", false); return; }
 		bool isIdle = isIdleHoriz() && isIdleVertical();
-		if (Input.GetKey(KeyCode.Mouse2)) {
+		//if (Input.GetKey(KeyCode.Mouse2)) {
 			if (isIdle) {
 				_animator.SetBool("IsRotation", true);
 			}
@@ -112,10 +118,10 @@ public class PlayerController : MonoBehaviour {
 			_animator.SetFloat("MouseDirection", Mathf.Clamp(_mouseAxisX * 4, -1, 1), 0.15f, Time.deltaTime);
 			_newPlayerRotation.y += 3 * Mathf.Clamp(_mouseAxisX, -1, 1);
 
-			transform.localRotation = Quaternion.Euler(_newPlayerRotation);
-		}
+			transform.localRotation = Quaternion.Euler(0f,_newPlayerRotation.y,0f);
+		//}
 
-		if (Input.GetKeyUp(KeyCode.Mouse2) || !isIdle) {
+		if (/*Input.GetKeyUp(KeyCode.Mouse2) || */!isIdle) {
 			_animator.SetBool("IsRotation", false);
 		}
 
