@@ -73,10 +73,8 @@ public class PlayerController : MonoBehaviour {
 			RotationY();
 		}
 		CheckForFall();
-	}
-	private void ImpactSound()
-	{
-		GetComponentInParent<PlayerSoundsController>()?.PlaySound();
+
+
 	}
 
 
@@ -284,12 +282,13 @@ public class PlayerController : MonoBehaviour {
 	public void ImpactAnimation() {
 		if (_isBlock) {
 			_animator.Play("BlockingImpact", 4, 0f);
-			ImpactSound();
+
 		} else {
+
 			_animator.Play("StandartImpact", 4, 0f);
-			ImpactSound();
 		}
 	}
+
 }
 
 public enum Direction {
