@@ -12,7 +12,7 @@ public class SensorView : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var player = other.GetComponent<PlayerController>();
-        if (player)
+        if (player && !player._isDead )
         {
             _mobStateMachine.Target = player.transform;
         }

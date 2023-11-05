@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 	[Header("Move Parameters")]
 	[SerializeField] private float _walkSpeed;
 	[SerializeField] private float _runSpeed;
@@ -15,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private LayerMask _notPlayerMask;
 
 
+	[SerializeField] private Transform _rotateObject;
 	[SerializeField] private GameObject _player;
 	[SerializeField] private Transform _groundChecker;
 
@@ -48,93 +48,94 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float _stickToGroundForce;
 	[SerializeField] private float _gravityMultiplier;
 
-	public bool isDead { get; set; }
 
-	private void Awake()
-	{
+	public bool _isDead { get; set; }
+
+	private void Awake() {
 		_characterController = GetComponent<CharacterController>();
 		_animator = GetComponentInChildren<Animator>();
 		_rotationAngle = 0f;
 	}
 
-	private void Update()
-	{
+	private void Update() {
 		_horizontalInput = Input.GetAxis("Horizontal");
 		_verticalInput = Input.GetAxis("Vertical");
 		//Debug.Log(_horizontalInput + "   " + _verticalInput);
 		_mouseAxisX = Input.GetAxis("Mouse X");
 		_mouseAxisY = Input.GetAxis("Mouse Y");
 
-		Block();
-		Attack();
-		Move();
-		Rotation();
+		if (!_isDead) {
+
+			Block();
+			Attack();
+			Move();
+			RotationX();
+			RotationY();
+		}
 		CheckForFall();
 
+
 	}
 
-	private void OnCollisionEnter(Collision other)
-	{
+
+	private void OnCollisionEnter(Collision other) {
 	}
 
-	private void setJumpAttackMarker()
-	{
+	private void setJumpAttackMarker() {
 		_isJumpAtack = true;
 	}
 
-	private void CheckForFall()
-	{
-		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask))
-		{
+	private void CheckForFall() {
+		if (Physics.Raycast(_groundChecker.transform.position, Vector3.down, 1.4f, _notPlayerMask)) {
 			_animator.SetBool("IsFalling", false);
-		}
-		else
-		{
+		} else {
 			_animator.SetBool("IsFalling", true);
 		}
 	}
 
-	private void ForwardAttack()
-	{
+	private void ForwardAttack() {
 		_animator.Play("ForwardAttack1", 2, 0f);
 		_animator.Play("NotFullRotation", 1, 0f);
 	}
-	private void BackwardAttack()
-	{
+	private void BackwardAttack() {
 		_animator.Play("AttackWithBackWalk", 2, 0f);
 		_animator.Play("FullRotation", 1, 0f);
 	}
 
-	private void Rotation()
-	{
+	private void RotationY(){
+    //if(!Input.GetKey(KeyCode.Mouse2)){ return; }
+		_newPlayerRotation.x += -2.5f * _mouseAxisY;
+		_newPlayerRotation.x = Mathf.Clamp(_newPlayerRotation.x, -70, 80);
+		//Debug.Log(_newPlayerRotation.x);
+		_rotateObject.localRotation = Quaternion.Euler(_newPlayerRotation.x,0f,0f);
+	}
+	private void RotationX() {
 		if (_isJump || _isJumpAtack || _isStopAttackOrBlock) { _animator.SetBool("IsRotation", false); return; }
 		bool isIdle = isIdleHoriz() && isIdleVertical();
-		// if (Input.GetKey(KeyCode.Mouse2)) {
-		if (isIdle)
-		{
-			_animator.SetBool("IsRotation", true);
-		}
-		//float axisResultX = _mouseAxisX < 0f ? -1f: _mouseAxisX >0f ? 1f : 0f;
-		_animator.SetFloat("MouseDirection", Mathf.Clamp(_mouseAxisX * 4, -1, 1), 0.15f, Time.deltaTime);
-		_newPlayerRotation.y += 3 * Mathf.Clamp(_mouseAxisX, -1, 1);
+		//if (Input.GetKey(KeyCode.Mouse2)) {
+			if (isIdle) {
+				_animator.SetBool("IsRotation", true);
+			}
+			//float axisResultX = _mouseAxisX < 0f ? -1f: _mouseAxisX >0f ? 1f : 0f;
+			_animator.SetFloat("MouseDirection", Mathf.Clamp(_mouseAxisX * 4, -1, 1), 0.15f, Time.deltaTime);
+			_newPlayerRotation.y += 3 * Mathf.Clamp(_mouseAxisX, -1, 1);
 
-		transform.localRotation = Quaternion.Euler(_newPlayerRotation);
+			transform.localRotation = Quaternion.Euler(0f,_newPlayerRotation.y,0f);
 		//}
 
-		// if (Input.GetKeyUp(KeyCode.Mouse2) || !isIdle)
-		// {
-		_animator.SetBool("IsRotation", false);
-		// }
+		if (/*Input.GetKeyUp(KeyCode.Mouse2) || */!isIdle) {
+			_animator.SetBool("IsRotation", false);
+		}
 
 	}
-	float H = 0;
-	private void Move()
-	{
+
+
+	private void Move() {
+
 		_isRun = Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(_horizontalInput) > 0.15f ||
 																										Mathf.Abs(_verticalInput) > 0.15f);
 
-		if (!_isStopAttackOrBlock)
-		{
+		if (!_isStopAttackOrBlock) {
 			float speed = _isRun ? _runSpeed : _walkSpeed;
 			Vector3 direction = _player.transform.right * _horizontalInput +
 													_player.transform.forward * _verticalInput;
@@ -152,95 +153,74 @@ public class PlayerController : MonoBehaviour
 		SetAnimatorProperties();
 
 	}
-	private void Block()
-	{
-		if (Input.GetKeyDown(KeyCode.Mouse1) && _isAttack == false && !_isJump && !_isBlock)
-		{
-			if (isIdleVertical())
-			{
+	private void Block() {
+		if (Input.GetKeyDown(KeyCode.Mouse1) && _isAttack == false && !_isJump && !_isBlock) {
+			if (isIdleVertical()) {
 				_isBlock = true;
 				_animator.Play("BlockStart", 2, 0f);
 			}
 		}
-		if ((Input.GetKeyUp(KeyCode.Mouse1) || !isIdleVertical()) && _isBlock)
-		{
+		if ((Input.GetKeyUp(KeyCode.Mouse1) || !isIdleVertical()) && _isBlock) {
 			_animator.SetTrigger("BlockEnd");
 		}
 	}
-	private void Attack()
-	{
-		if (Input.GetKeyDown(KeyCode.Mouse0) && _isAttack == false && !_isJump && !_isBlock)
-		{
+	private void Attack() {
+		if (Input.GetKeyDown(KeyCode.Mouse0) && _isAttack == false && !_isJump && !_isBlock) {
 			_isAttack = true;
 
-			if (_verticalInput < 0 && isIdleHoriz())
-			{
+			if (_verticalInput < 0 && isIdleHoriz()) {
 				_isStopAttackOrBlock = true;
 				_animator.Play("AttackWithBackWalk", 3, 0f);
 				_animator.Play("FullRotation", 1, 0f);
-			}
-			else if (!_isRun && (_verticalInput >= 0 || _horizontalInput != 0))
-			{
-				int maxRand = 5;
-				if (!isIdleVertical() || !isIdleHoriz())
-				{
-					maxRand = 4;
-				}
-				int rnd = UnityEngine.Random.Range(0, maxRand);
+			} else if (!_isRun && (_verticalInput >= 0 || _horizontalInput != 0)) {
+
 				int layer = 2;
 				string name = "";
-				switch (rnd)
-				{
-					case 0: case 1: name = "ForwardAttack1"; break;
-					case 2: case 3: name = "ForwardAttack2"; break;
-					case 4: name = "RotationAttack"; break;
-				}
+				if (isIdleHoriz() && isIdleVertical() && Input.GetKey(KeyCode.LeftControl)) {
+					name = "RotationAttack";
+					if (name == "RotationAttack") {
+						_isStopAttackOrBlock = true;
+						layer = 3;
+						Invoke("setJumpAttackMarker", 0.5f);
+					}
 
-				if (name == "RotationAttack")
-				{
-					_isStopAttackOrBlock = true;
-					layer = 3;
-					Invoke("setJumpAttackMarker", 0.5f);
+				} else {
+					int maxRand = 4;
+					int rnd = UnityEngine.Random.Range(0, maxRand);
+					switch (rnd) {
+						case 0: case 1: name = "ForwardAttack1"; break;
+						case 2: case 3: name = "ForwardAttack2"; break;
+					}
 				}
 				_animator.Play(name, layer, 0f);
 
-			}
-			else if (_isRun && _verticalInput >= 0 && _horizontalInput == 0)
-			{
-				if (_characterController.isGrounded)
-				{
+			} else if (_isRun && _verticalInput >= 0 && _horizontalInput == 0) {
+				if (_characterController.isGrounded) {
 					_isStopAttackOrBlock = true;
 					float time = 0.3f;
 
 					Invoke("setJumpAttackMarker", time);
 					_animator.Play("AttackWithForwardRun", 3, 0f);
 				}
-			}
-			else if (_isRun && _horizontalInput != 0)
-			{
+			} else if (_isRun && _horizontalInput != 0) {
 				int maxRand = 4;
 				int rnd = UnityEngine.Random.Range(0, maxRand);
 				int layer = 2;
 				string name = "";
-				switch (rnd)
-				{
+				switch (rnd) {
 					case 0: case 1: name = "ForwardAttack1"; break;
 					case 2: case 3: name = "ForwardAttack2"; break;
 				}
 				_animator.Play(name, layer, 0f);
 				////
-			}
-			else
-			{
+			} else {
 				_isAttack = false;
 				_isStopAttackOrBlock = false;
 			}
 		}
 	}
-	private void SetAnimatorProperties()
-	{
-		if (!_isStopAttackOrBlock)
-		{
+	private void SetAnimatorProperties() {
+		if (!_isStopAttackOrBlock) {
 			_animator.SetFloat("Speed", _characterController.velocity.magnitude);
 			_animator.SetFloat("VerticalDirections", _verticalInput, 0.17f, Time.deltaTime);
 			_animator.SetFloat("HorizontalDirections", _horizontalInput, 0.17f, Time.deltaTime);
@@ -248,65 +228,70 @@ public class PlayerController : MonoBehaviour
 		_animator.SetBool("IsRun", _isRun);
 
 	}
-	private void JumpAndGravitation()
-	{
-		if (_characterController.isGrounded)
-		{
-			if ((Input.GetKeyDown(KeyCode.Space) && !_isAttack) || _isJumpAtack)
-			{
+	private void JumpAndGravitation() {
+		if (_characterController.isGrounded) {
+			if ((Input.GetKeyDown(KeyCode.Space) && !_isAttack) || _isJumpAtack) {
 
-				if (_isJumpAtack)
-				{
+				if (_isJumpAtack) {
 					_isJumpAtack = false;
-				}
-				else
-				{
+				} else {
 					_isJump = true;
 					_animator.SetTrigger("IsJump");
 					_animator.SetBool("IsFalling", false);
 				}
 				_newPosition.y = _jumpHeight;
-			}
-			else
-			{
+			} else {
 				_isJump = false;
 				_newPosition.y = -_stickToGroundForce;
 			}
 
-		}
-		else
-		{
+		} else {
 			//_isJumpAtack = false;
 			_newPosition.y += Physics.gravity.y * _gravityMultiplier * Time.deltaTime;
 		}
 	}
-	public void SetEndOfAttack()
-	{
+
+	public void SetEndOfAttack() {
 		_isAttack = false;
 		_isStopAttackOrBlock = false;
 	}
-	public void SetEndOfBlock()
-	{
+	public void SetEndOfBlock() {
 		_isBlock = false;
 		_isStopAttackOrBlock = false;
 	}
-	public void StopPlayerHorizontally()
-	{
+	public void StopPlayerHorizontally() {
 		_newPosition = new Vector3(0f, _newPosition.y, 0f);
 	}
-
-	public bool isIdleHoriz()
-	{
+	public bool isIdleHoriz() {
 		return _horizontalInput > -0.2 && _horizontalInput < 0.2;
 	}
-	public bool isIdleVertical()
-	{
+	public bool isIdleVertical() {
 		return _verticalInput > -0.2 && _verticalInput < 0.2;
 	}
+
+
+	public void DeathAnimation() {
+		if (!_characterController.isGrounded || _isDead) { return; }
+		
+		_animator.SetBool("IsDeadBool", true);
+		_animator.SetTrigger("IsDead");
+		_isDead = true;
+
+
+	}
+	public void ImpactAnimation() {
+		if (_isBlock) {
+			_animator.Play("BlockingImpact", 4, 0f);
+
+		} else {
+
+			_animator.Play("StandartImpact", 4, 0f);
+		}
+	}
+
 }
 
-public enum Direction
-{
+public enum Direction {
 	Forward,
 	Backward,
 	Left,

@@ -1,15 +1,13 @@
 using System.Text;
 using UnityEngine;
 
-public class MobHealth : Health
-{
-    [SerializeField] private Transform _attackPoint;
+public class MobHealth : Health {
+	[SerializeField] private Transform _attackPoint;
 
-    public override void TakeDamage(int damage)
-    {
+	public override void TakeDamage(float damage) {
 #if (UNITY_EDITOR)
-        Debug.Log($"player take damage {damage}");
-        Debug.Log(_currentHealth);
+		Debug.Log($"player take damage {damage}");
+		Debug.Log(_currentHealth);
 #endif
 
         _currentHealth -= damage;
