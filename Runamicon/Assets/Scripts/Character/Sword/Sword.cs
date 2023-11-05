@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Sword : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class Sword : MonoBehaviour
 
 		var mobStateMachine = other.GetComponent<MobStateMachine>();
 
-		mobStateMachine.GetComponent<MobHealth>().TakeDamage(_damage);
+		mobStateMachine.GetComponent<MobHealth>().TakeDamage(25);
 		mobStateMachine.Animator.Play("hit");
 #if (UNITY_EDITOR)
 		Debug.Log(_damage);

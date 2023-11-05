@@ -13,6 +13,17 @@ public class MobHealth : Health
 #endif
 
         _currentHealth -= damage;
+
+        if (_currentHealth <= 0)
+        {
+            var mobStateMachine = GetComponent<MobStateMachine>();
+            mobStateMachine.isDead = true;
+            mobStateMachine.isWalking = false;
+            mobStateMachine.isRunning = false;
+            mobStateMachine.isAttacking = false;
+            mobStateMachine.Target = null;
+            mobStateMachine.GetComponent<Collider>().enabled = false;
+        }
     }
 
     public void DealDamage(int damage)
