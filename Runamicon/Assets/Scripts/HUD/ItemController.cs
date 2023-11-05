@@ -15,10 +15,10 @@ public class ItemController : MonoBehaviour {
 		inventoryController._description.SetActive(true);
 		inventoryController._icon.sprite = item._icon;
 		inventoryController._descrText.text = item._item.Description;
-		inventoryController._itemInDescr= item;
+		inventoryController._itemInDescr = item;
 
 
 
 	}
-	
+
 }

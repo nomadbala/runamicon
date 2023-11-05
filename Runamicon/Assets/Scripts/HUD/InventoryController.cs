@@ -19,11 +19,9 @@ public class InventoryController : MonoBehaviour {
 	private void Awake() {
 		_Instance = this;
 		_hudItems = new List<HudItem>();
-		
+
 	}
-	private void Update() {
-		Debug.Log(_hudItems.Count);
-	}
+
 	public void Add(HudItem item) {
 		if (_hudItems.Count == 0) {
 			item.id = 0;
@@ -34,14 +32,15 @@ public class InventoryController : MonoBehaviour {
 
 	}
 	public void Remove(Item removedItem) {
+		//Debug.Log(_hudItems.Count);
 		foreach (HudItem item in _hudItems) {
 			if (item._item == removedItem) {
 				_hudItems.Remove(item);
 				return;
 			}
 		}
-
 	}
+
 	public void ChangeItemInUI(bool isRemoved = false) {
 		if (isRemoved) {
 			foreach (Transform i in _itemContent) {
@@ -51,8 +50,9 @@ public class InventoryController : MonoBehaviour {
 				SetItem(i);
 			}
 		} else {
-
-			SetItem(_hudItems[_hudItems.Count - 1]);
+			if (_hudItems.Count != 0) {
+				SetItem(_hudItems[_hudItems.Count - 1]);
+			}
 		}
 	}
 	private void SetItem(HudItem itemHud) {
@@ -67,7 +67,9 @@ public class InventoryController : MonoBehaviour {
 	}
 
 	public void Use() {
+		//Debug.Log(2);
 		_inventory.useItem(_itemInDescr._item.GetItemType);
 		_description.SetActive(false);
+		//transform.gameObject.SetActive(false);
 	}
 }

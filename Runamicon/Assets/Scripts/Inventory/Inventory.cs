@@ -5,6 +5,8 @@ using UnityEngine;
 public class Inventory : MonoBehaviour {
 	[SerializeField] private GameObject _player;
 	[SerializeField] private GameObject _inventoryPanel;
+
+
 	private List<Item> _items;
 	private Accessories _amulet;
 	private List<Accessories> _rings;
@@ -16,7 +18,7 @@ public class Inventory : MonoBehaviour {
 		//_sword= _player.GetComponent<Sword>();
 		_rings = new List<Accessories>();
 		_amulet = null;
-		
+		//Debug.Log(_inventoryController);
 	}
 
 	private void Start() {
@@ -35,40 +37,39 @@ public class Inventory : MonoBehaviour {
 		AddItem(new Drink(1));
 	}
 	private void Update() {
-		
-		if (Input.GetKeyDown(KeyCode.I)) { 
-		if(_inventoryPanel.activeSelf){
 
-		  _inventoryPanel.SetActive(false); 
-		}else{
+		if (Input.GetKeyDown(KeyCode.I)) {
+			if (_inventoryPanel.activeSelf) {
+				_inventoryPanel.SetActive(false);
+			} else {
+				_inventoryPanel.SetActive(true);
+			}
+			//PrintInventory(); 
+		}
 
-		  _inventoryPanel.SetActive(true); 
+		return;
+		if (Input.GetKeyDown(KeyCode.H)) {  RemoveItemAfterUse(Heal()); }
+		if (Input.GetKeyDown(KeyCode.Alpha1)) {  RemoveItemAfterUse(Eat()); }
+		if (Input.GetKeyDown(KeyCode.Alpha2)) { RemoveItemAfterUse(Drink()); }
+		if (Input.GetKeyDown(KeyCode.Alpha3)) {
+			Accessories amulet = (Accessories)DressHealthAmulet();
+			dressNewAmulet(amulet);
 		}
-		//PrintInventory(); 
+		if (Input.GetKeyDown(KeyCode.Alpha4)) {
+			Accessories amulet = (Accessories)DressStrengthAmulet();
+			dressNewAmulet(amulet);
 		}
-		//if(Input.GetKeyDown(KeyCode.N)){ InventoryController._Instance.Remove(0); InventoryController._Instance.ChangeItemInUI(true); }
-		//if (Input.GetKeyDown(KeyCode.H)) {  RemoveItemAfterUse(Heal()); }
-		//if (Input.GetKeyDown(KeyCode.Alpha1)) {  RemoveItemAfterUse(Eat()); }
-		//if (Input.GetKeyDown(KeyCode.Alpha2)) { RemoveItemAfterUse(Drink()); }
-		//if (Input.GetKeyDown(KeyCode.Alpha3)) {
-		//	Accessories amulet = (Accessories)DressHealthAmulet();
-		//	dressNewAmulet(amulet);
-		//}
-		//if (Input.GetKeyDown(KeyCode.Alpha4)) {
-		//	Accessories amulet = (Accessories)DressStrengthAmulet();
-		//	dressNewAmulet(amulet);
-		//}
-		//if (Input.GetKeyDown(KeyCode.Alpha5)) {
-		//	Accessories ring = (Accessories)DressHealthRing();
-		//	dressNewRing(ring);
-		//}
-		//if (Input.GetKeyDown(KeyCode.Alpha6)) {
-		//	Accessories ring = (Accessories)DressStrengthRing();
-		//	dressNewRing(ring);
-		//}
+		if (Input.GetKeyDown(KeyCode.Alpha5)) {
+			Accessories ring = (Accessories)DressHealthRing();
+			dressNewRing(ring);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha6)) {
+			Accessories ring = (Accessories)DressStrengthRing();
+			dressNewRing(ring);
+		}
 
 	}
-	public void useItem(ItemType type){
+	public void useItem(ItemType type) {
 		switch (type) {
 			case ItemType.HealthPotion:
 			RemoveItemAfterUse(Heal());
@@ -114,7 +115,7 @@ public class Inventory : MonoBehaviour {
 		if (ring.Amount <= 0) {
 			ring.Amount = 1;
 			RemoveItem(ring);
-		} 
+		}
 
 		if (_rings.Count >= 1) {
 			//Debug.Log("AAA"+_rings[0].GetItemType);
@@ -176,16 +177,16 @@ public class Inventory : MonoBehaviour {
 				break;
 			}
 		}
-		if(!isChanged) {
+		if (!isChanged) {
 			_items.Add(item);
 			InventoryController._Instance.Add(new HudItem(item, InventoryIcons._Instance.GetSprite(item.GetItemType)));
 			InventoryController._Instance.ChangeItemInUI(true);
 		}
 
-		if(_items.Count==0){
+		if (_items.Count == 0) {
 			_items.Add(item);
 		}
-		
+
 	}
 
 
@@ -196,6 +197,17 @@ public class Inventory : MonoBehaviour {
 	}
 	public void RemoveItem(Item item) {
 		_items.Remove(item);
+		//Debug.Log(_inventoryController._hudItems.Count);
+		//foreach (HudItem i in hudItems) {
+		//	if (i._item == item) {
+		//		hudItems.Remove(i);
+		//		return;
+		//	}
+		//}
+		//InventoryController._Instance._hudItems = hudItems;
+		//foreach(Item _listItem in _items) {
+		//InventoryController._Instance.Add(new HudItem(_listItem, InventoryIcons._Instance.GetSprite(_listItem.GetItemType)));
+		//}
 		InventoryController._Instance.Remove(item);
 		InventoryController._Instance.ChangeItemInUI(true);
 	}
