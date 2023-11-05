@@ -44,40 +44,57 @@ public class Inventory : MonoBehaviour {
 
 		  _inventoryPanel.SetActive(true); 
 		}
-		PrintInventory(); 
+		//PrintInventory(); 
 		}
 		//if(Input.GetKeyDown(KeyCode.N)){ InventoryController._Instance.Remove(0); InventoryController._Instance.ChangeItemInUI(true); }
-		if (Input.GetKeyDown(KeyCode.M)) {
-			Debug.Log("Amulet: " + _amulet?.GetItemType);
-			Debug.Log("Rings: ");
-			_rings.ForEach(r => { Debug.Log(r); });
-		}
-		if (Input.GetKeyDown(KeyCode.H)) { Debug.Log("HEAL"); RemoveItemAfterUse(Heal()); }
-		if (Input.GetKeyDown(KeyCode.Alpha1)) { Debug.Log("Eat"); RemoveItemAfterUse(Eat()); }
-		if (Input.GetKeyDown(KeyCode.Alpha2)) { Debug.Log("Drink"); RemoveItemAfterUse(Drink()); }
-		if (Input.GetKeyDown(KeyCode.Alpha3)) {
-			Debug.Log("HPAmulet");
+		//if (Input.GetKeyDown(KeyCode.H)) {  RemoveItemAfterUse(Heal()); }
+		//if (Input.GetKeyDown(KeyCode.Alpha1)) {  RemoveItemAfterUse(Eat()); }
+		//if (Input.GetKeyDown(KeyCode.Alpha2)) { RemoveItemAfterUse(Drink()); }
+		//if (Input.GetKeyDown(KeyCode.Alpha3)) {
+		//	Accessories amulet = (Accessories)DressHealthAmulet();
+		//	dressNewAmulet(amulet);
+		//}
+		//if (Input.GetKeyDown(KeyCode.Alpha4)) {
+		//	Accessories amulet = (Accessories)DressStrengthAmulet();
+		//	dressNewAmulet(amulet);
+		//}
+		//if (Input.GetKeyDown(KeyCode.Alpha5)) {
+		//	Accessories ring = (Accessories)DressHealthRing();
+		//	dressNewRing(ring);
+		//}
+		//if (Input.GetKeyDown(KeyCode.Alpha6)) {
+		//	Accessories ring = (Accessories)DressStrengthRing();
+		//	dressNewRing(ring);
+		//}
 
-			Accessories amulet = (Accessories)DressHealthAmulet();
-			dressNewAmulet(amulet);
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha4)) {
-			Debug.Log("STRNGAmulet");
-
-			Accessories amulet = (Accessories)DressStrengthAmulet();
-			dressNewAmulet(amulet);
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha5)) {
-			Debug.Log("HPRing");
-
-			Accessories ring = (Accessories)DressHealthRing();
-			dressNewRing(ring);
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha6)) {
-			Debug.Log("STRNGRing");
-
-			Accessories ring = (Accessories)DressStrengthRing();
-			dressNewRing(ring);
+	}
+	public void useItem(ItemType type){
+		switch (type) {
+			case ItemType.HealthPotion:
+			RemoveItemAfterUse(Heal());
+			break;
+			case ItemType.Food:
+			RemoveItemAfterUse(Eat());
+			break;
+			case ItemType.Drink:
+			RemoveItemAfterUse(Drink());
+			break;
+			case ItemType.HealthAmulet:
+			Accessories amuletH = (Accessories)DressHealthAmulet();
+			dressNewAmulet(amuletH);
+			break;
+			case ItemType.StrengthAmulet:
+			Accessories amuletS = (Accessories)DressStrengthAmulet();
+			dressNewAmulet(amuletS);
+			break;
+			case ItemType.HealthRing:
+			Accessories ringH = (Accessories)DressHealthRing();
+			dressNewRing(ringH);
+			break;
+			case ItemType.StrengthRing:
+			Accessories ringS = (Accessories)DressStrengthRing();
+			dressNewRing(ringS);
+			break;
 		}
 	}
 	private void dressNewAmulet(Accessories amulet) {
@@ -100,7 +117,7 @@ public class Inventory : MonoBehaviour {
 		} 
 
 		if (_rings.Count >= 1) {
-			Debug.Log("AAA"+_rings[0].GetItemType);
+			//Debug.Log("AAA"+_rings[0].GetItemType);
 			_rings[0].CancelUse(_player);
 			AddItem(_rings[0]);
 			//InventoryController._Instance.Add(new HudItem(_rings[0], InventoryIcons._Instance.GetSprite(_rings[0].GetItemType)));
@@ -119,7 +136,7 @@ public class Inventory : MonoBehaviour {
 				return item;
 			}
 		}
-		Debug.Log(errMessage);
+		//Debug.Log(errMessage);
 		return null;
 	}
 	private Item Heal() {
