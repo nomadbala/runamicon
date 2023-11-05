@@ -29,35 +29,35 @@ public abstract class Item {
 
 	public abstract void UseItem(GameObject component);
 
-	static protected void GetRandomItem() {
+	static public Item GetRandomItem() {
 		Array vals = Enum.GetValues(typeof(ItemType));
 		int amount = UnityEngine.Random.Range(_minAmount, _maxAmount);
 		ItemType type = (ItemType)vals.GetValue(UnityEngine.Random.Range(0, vals.Length - 1));
 
 		switch (type) {
 			case ItemType.HealthPotion:
-
-			break;
+			return new HealthPotion(amount);
 			case ItemType.Food:
+			return new Food(amount);
 
-			break;
 			case ItemType.Drink:
+			return new Drink(amount);
 
-			break;
 			case ItemType.HealthAmulet:
+			return new HealthAmulet(1);
 
-			break;
 			case ItemType.StrengthAmulet:
+			return new StrengthAmulet(1);
 
-			break;
 			case ItemType.HealthRing:
+			return new HealthRing(1);
 
-			break;
 			case ItemType.StrengthRing:
+			return new StrengthRing(1);
 
-			break;
 		}
 
+		return null;
 	}
 
 	static public Item GetItem(int amount, ItemType type) {

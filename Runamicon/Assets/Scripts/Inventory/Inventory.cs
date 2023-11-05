@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour {
@@ -22,7 +23,7 @@ public class Inventory : MonoBehaviour {
 	}
 
 	private void Start() {
-		TempFillInventory();
+		//TempFillInventory();
 	}
 
 	public void TempFillInventory() {
@@ -48,8 +49,8 @@ public class Inventory : MonoBehaviour {
 		}
 
 		return;
-		if (Input.GetKeyDown(KeyCode.H)) {  RemoveItemAfterUse(Heal()); }
-		if (Input.GetKeyDown(KeyCode.Alpha1)) {  RemoveItemAfterUse(Eat()); }
+		if (Input.GetKeyDown(KeyCode.H)) { RemoveItemAfterUse(Heal()); }
+		if (Input.GetKeyDown(KeyCode.Alpha1)) { RemoveItemAfterUse(Eat()); }
 		if (Input.GetKeyDown(KeyCode.Alpha2)) { RemoveItemAfterUse(Drink()); }
 		if (Input.GetKeyDown(KeyCode.Alpha3)) {
 			Accessories amulet = (Accessories)DressHealthAmulet();
@@ -103,9 +104,10 @@ public class Inventory : MonoBehaviour {
 		RemoveItem(amulet);
 		if (_amulet != null) {
 			_amulet.CancelUse(_player);
-			_items.Add(_amulet);
+			AddItem(_amulet);
 			InventoryController._Instance.Add(new HudItem(_amulet, InventoryIcons._Instance.GetSprite(_amulet.GetItemType)));
 		}
+
 		InventoryController._Instance.ChangeItemInUI(true);
 		_amulet = amulet;
 	}
@@ -121,8 +123,8 @@ public class Inventory : MonoBehaviour {
 			//Debug.Log("AAA"+_rings[0].GetItemType);
 			_rings[0].CancelUse(_player);
 			AddItem(_rings[0]);
-			//InventoryController._Instance.Add(new HudItem(_rings[0], InventoryIcons._Instance.GetSprite(_rings[0].GetItemType)));
 			_rings.RemoveAt(0);
+			//InventoryController._Instance.Add(new HudItem(_rings[0], InventoryIcons._Instance.GetSprite(_rings[0].GetItemType)));
 
 		}
 		_rings.Add(ring);

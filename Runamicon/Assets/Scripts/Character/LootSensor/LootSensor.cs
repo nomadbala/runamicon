@@ -5,11 +5,16 @@ using UnityEngine;
 public class LootSensor : MonoBehaviour {
 	[SerializeField] private LayerMask _layerMask;
 	[SerializeField] private Transform _target;
+
+	private Inventory inventory;
+	
 	private Ray _ray;
+
 
 	private bool _isDownActionKey;
 	private void Awake() {
 		_ray = new Ray(_target.position, _target.forward);
+		inventory=GetComponentInParent<Inventory>();
 	}
 	private void OnTriggerEnter(Collider other) {
 		//Debug.Log("enter");
@@ -40,7 +45,7 @@ public class LootSensor : MonoBehaviour {
 		if (Physics.Raycast(_ray, out RaycastHit hitInfo, 20.5f, _layerMask)) {
 			Interactable interactable = hitInfo.collider.gameObject.GetComponent<Interactable>();
 			if (interactable) {
-				interactable.Action();
+				interactable.Action(inventory);
 			}
 		}
 		// RaycastHit[] raycastHits= Physics.RaycastAll(_ray, 2.5f, _layerMask);
