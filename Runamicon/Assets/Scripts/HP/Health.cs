@@ -6,17 +6,16 @@ public abstract class Health : MonoBehaviour {
 	public float _currentHealth;
 
 	private void Start() {
-		//_currentHealth = _maxHealth;
-		_currentHealth = 20f;
+		_currentHealth = _maxHealth;
 	}
 
 	public abstract void TakeDamage(float damage);
-	public void Heal(float health) {
+	public virtual void Heal(float health) {
 		_currentHealth += health;
 		if (_currentHealth > _maxHealth) { _currentHealth = _maxHealth; }
 		Debug.Log($"Increasing: {health} Health: {_currentHealth} Max: {_maxHealth}");
 	}
-	public void SetMaxHealth(float maxHealth) {
+	public virtual void SetMaxHealth(float maxHealth) {
 		_maxHealth = maxHealth;
 		if (_currentHealth > _maxHealth) { _currentHealth = _maxHealth; }
 		Debug.Log($"Max: {_maxHealth}");

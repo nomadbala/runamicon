@@ -6,18 +6,18 @@ using UnityEngine;
 public abstract class Item {
 	protected int _amount;
 
-	static private int _minAmount = 1; 
-	static private int _maxAmount = 3; 
-	public int Amount { get =>_amount; set => _amount=value; }
+	static private int _minAmount = 1;
+	static private int _maxAmount = 3;
+	public int Amount { get => _amount; set => _amount = value; }
 
-	protected ItemType _itemType=ItemType.HealthPotion;
+	protected ItemType _itemType = ItemType.HealthPotion;
 	public ItemType GetItemType => _itemType;
 
 	protected string _description;
-	public string Description { get=> _description; set=> _description = value; }
+	public string Description { get => _description; set => _description = value; }
 
 	protected bool _isNeedsRemove;
-	public bool IsNeedsRemove { get=> _isNeedsRemove; set=> _isNeedsRemove=value; }
+	public bool IsNeedsRemove { get => _isNeedsRemove; set => _isNeedsRemove = value; }
 
 	protected bool _isUsed;
 	public bool IsUsed { get; set; }
@@ -28,9 +28,9 @@ public abstract class Item {
 
 
 	public abstract void UseItem(GameObject component);
-	
+
 	static protected void GetRandomItem() {
-		Array vals= Enum.GetValues(typeof(ItemType));
+		Array vals = Enum.GetValues(typeof(ItemType));
 		int amount = UnityEngine.Random.Range(_minAmount, _maxAmount);
 		ItemType type = (ItemType)vals.GetValue(UnityEngine.Random.Range(0, vals.Length - 1));
 
@@ -57,9 +57,35 @@ public abstract class Item {
 
 			break;
 		}
-		
+
 	}
 
+	static public Item GetItem(int amount, ItemType type) {
+		switch (type) {
+			case ItemType.HealthPotion:
+			return new HealthPotion(amount);
+
+			case ItemType.Food:
+			return new Food(amount);
+
+			case ItemType.Drink:
+			return new Drink(amount);
+
+			case ItemType.HealthAmulet:
+			return new HealthAmulet(amount);
+
+			case ItemType.StrengthAmulet:
+			return new StrengthAmulet(amount);
+
+			case ItemType.HealthRing:
+			return new HealthRing(amount);
+
+			case ItemType.StrengthRing:
+			return new StrengthRing(amount);
+
+		}
+		return null;
+	}
 }
 
 public abstract class Accessories : Item {
@@ -67,8 +93,8 @@ public abstract class Accessories : Item {
 	public abstract void CancelUse(GameObject component);
 }
 
-public enum ItemType{
-	HealthPotion, 
+public enum ItemType {
+	HealthPotion,
 	Food,
 	Drink,
 	HealthAmulet,

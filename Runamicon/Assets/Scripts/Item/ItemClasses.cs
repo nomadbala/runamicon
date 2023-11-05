@@ -18,7 +18,7 @@ public class HealthPotion : Item {
 	public float HealingPower => _healingPower;
 
 	public HealthPotion(int amount) : base(amount, ItemType.HealthPotion) {
-		_healingPower = 40f;
+		_healingPower =  40f;
 		//IsNeedsRemove = true;
 		_description = $"Heals your health by {_healingPower} HP";
 	}
@@ -78,7 +78,6 @@ public class Drink : Item {
 
 }
 
-
 public class HealthAmulet : Accessories {
 	private float _healthIncrease;
 	public float HealthIncrease => _healthIncrease;
@@ -99,9 +98,9 @@ public class HealthAmulet : Accessories {
 
 	public override void CancelUse(GameObject component) {
 		Health health = component.GetComponent<Health>();
-		if (health && _isUsed) {
+		if (health) {
 			_isUsed = false;
-			health.SetMaxHealth(health._maxHealth -  _healthIncrease);
+			health.SetMaxHealth(health._maxHealth - _healthIncrease);
 		}
 	}
 }
@@ -125,7 +124,7 @@ public class StrengthAmulet : Accessories {
 
 	public override void CancelUse(GameObject component) {
 		Sword sword = component.GetComponent<Sword>();
-		if (sword && _isUsed) {
+		if (sword) {
 			_isUsed = false;
 			sword.SetDamage(sword.Damage - _strengthIncrease);
 		}
@@ -152,9 +151,9 @@ public class HealthRing : Accessories {
 
 	public override void CancelUse(GameObject component) {
 		Health health = component.GetComponent<Health>();
-		if (health && _isUsed) {
+		if (health) {
 			_isUsed = false;
-			health.SetMaxHealth(health._maxHealth -  _healthIncrease);
+			health.SetMaxHealth(health._maxHealth - _healthIncrease);
 		}
 	}
 }
@@ -178,7 +177,7 @@ public class StrengthRing : Accessories {
 
 	public override void CancelUse(GameObject component) {
 		Sword sword = component.GetComponent<Sword>();
-		if (sword && _isUsed) {
+		if (sword) {
 			_isUsed = false;
 			sword.SetDamage(sword.Damage - _strengthIncrease);
 		}
