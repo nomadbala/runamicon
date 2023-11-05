@@ -10,26 +10,34 @@ public class MobHealth : Health {
 		Debug.Log(_currentHealth);
 #endif
 
-		_currentHealth -= damage;
-		if (_currentHealth <= 0) {
-			GetComponent<MobStateMachine>().isDead = true;
+        _currentHealth -= damage;
 
-		}
-	}
+        if (_currentHealth <= 0)
+        {
+            var mobStateMachine = GetComponent<MobStateMachine>();
+            mobStateMachine.isDead = true;
+            mobStateMachine.isWalking = false;
+            mobStateMachine.isRunning = false;
+            mobStateMachine.isAttacking = false;
+            mobStateMachine.Target = null;
+            mobStateMachine.GetComponent<Collider>().enabled = false;
+        }
+    }
 
-	public void DealDamage(float damage) {
-		Collider[] objects = Physics.OverlapSphere(_attackPoint.position, 200);
+    public void DealDamage(int damage)
+    {
+        Collider[] objects = Physics.OverlapSphere(_attackPoint.position, 2);
 
-		PlayerHealth playerHealth = null;
+        PlayerHealth playerHealth = null;
 
-		foreach (var obj in objects) {
-			playerHealth = obj.GetComponentInChildren<PlayerHealth>();
-			if (playerHealth != null) {
-				Debug.Log("œŒ◊≈Ã” ŒÕ ¿ Õ≈ ﬂ ¿¿¿" +"  "+damage);
-				playerHealth.TakeDamage(damage);
-			};
-			playerHealth = null;
-		}
-	}
-
+        foreach (var obj in objects)
+        {
+            playerHealth = obj.GetComponentInChildren<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage);
+            };
+            playerHealth = null;
+        }
+    }
 }

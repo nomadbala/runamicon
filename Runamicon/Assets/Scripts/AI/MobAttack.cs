@@ -7,7 +7,7 @@ public class MobAttack : State {
 
 	private MobStateMachine _mobStateMachine;
 
-	private int damage = 50;
+    private int damage = 25;
 
 	public override void Enter() {
 		if (StateMachine == null) return;
