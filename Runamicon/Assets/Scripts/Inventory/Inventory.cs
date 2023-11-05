@@ -117,7 +117,7 @@ public class Inventory : MonoBehaviour {
 			RemoveItem(ring);
 		}
 
-		if (_rings.Count >= 1) {
+		if (_rings.Count >= 6) {
 			//Debug.Log("AAA"+_rings[0].GetItemType);
 			_rings[0].CancelUse(_player);
 			AddItem(_rings[0]);
