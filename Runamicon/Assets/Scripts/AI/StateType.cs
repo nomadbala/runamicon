@@ -6,6 +6,7 @@ public enum StateType
     Run,
     Attack,
     Patrol,
+    PatrolWP,
     Follow,
     Dead
 }
