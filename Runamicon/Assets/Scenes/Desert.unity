@@ -3827,6 +3827,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -60.97589
       objectReference: {fileID: 0}
+    - target: {fileID: 1371349867936959259, guid: c23dd0129af758a4086088dcdea83fce, type: 3}
+      propertyPath: _inventoryPanel
+      value: 
+      objectReference: {fileID: 1357911993}
     - target: {fileID: 3364825569909610760, guid: c23dd0129af758a4086088dcdea83fce, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1249.61
@@ -26512,6 +26516,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4517551289828362, guid: fd0b6e58441c3764f9d46bbc15cc903c, type: 3}
   m_PrefabInstance: {fileID: 1355075905}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1357911993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1959352177149147791, guid: c23dd0129af758a4086088dcdea83fce, type: 3}
+  m_PrefabInstance: {fileID: 179968448}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1366339406
 PrefabInstance:
