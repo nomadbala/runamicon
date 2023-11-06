@@ -12,6 +12,7 @@ public class ItemController : MonoBehaviour {
 		inventoryController = GetComponentInParent<InventoryController>();
 	}
 	public void SelectItem() {
+		Debug.Log("AAAAAAAAAAAAAAAAA");
 		inventoryController._description.SetActive(true);
 		inventoryController._icon.sprite = item._icon;
 		inventoryController._descrText.text = item._item.Description;

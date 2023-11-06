@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -23,9 +24,11 @@ public class Inventory : MonoBehaviour
 		//Debug.Log(_inventoryController);
 	}
 
+
 	private void Start()
 	{
-		TempFillInventory();
+		//TempFillInventory();
+
 	}
 
 	public void TempFillInventory()
@@ -116,15 +119,22 @@ public class Inventory : MonoBehaviour
 	private void dressNewAmulet(Accessories amulet)
 	{
 		if (amulet == null) { return; }
-		RemoveItem(amulet);
+		amulet.Amount--;
+		if (amulet.Amount <= 0)
+		{
+			amulet.Amount = 1;
+			RemoveItem(amulet);
+		}
 		if (_amulet != null)
 		{
 			_amulet.CancelUse(_player);
-			_items.Add(_amulet);
-			InventoryController._Instance.Add(new HudItem(_amulet, InventoryIcons._Instance.GetSprite(_amulet.GetItemType)));
+			//_amulet.Amount = 1;
+			AddItem(_amulet, true);
+			//InventoryController._Instance.Add(new HudItem(_amulet, InventoryIcons._Instance.GetSprite(_amulet.GetItemType)));
 		}
-		InventoryController._Instance.ChangeItemInUI(true);
+
 		_amulet = amulet;
+		InventoryController._Instance.ChangeItemInUI(true);
 	}
 	private void dressNewRing(Accessories ring)
 	{
@@ -141,8 +151,8 @@ public class Inventory : MonoBehaviour
 			//Debug.Log("AAA"+_rings[0].GetItemType);
 			_rings[0].CancelUse(_player);
 			AddItem(_rings[0]);
-			//InventoryController._Instance.Add(new HudItem(_rings[0], InventoryIcons._Instance.GetSprite(_rings[0].GetItemType)));
 			_rings.RemoveAt(0);
+			//InventoryController._Instance.Add(new HudItem(_rings[0], InventoryIcons._Instance.GetSprite(_rings[0].GetItemType)));
 
 		}
 		_rings.Add(ring);
@@ -199,7 +209,8 @@ public class Inventory : MonoBehaviour
 			Debug.Log(item.GetItemType + " " + item.Amount);
 		}
 	}
-	public void AddItem(Item item)
+
+	public void AddItem(Item item, bool amuletReturned = false)
 	{
 
 		bool isChanged = false;
@@ -207,7 +218,15 @@ public class Inventory : MonoBehaviour
 		{
 			if (_listItem.GetItemType == item.GetItemType)
 			{
-				_listItem.Amount += item.Amount;
+				if (amuletReturned)
+				{
+					_listItem.Amount++;
+				}
+				else
+				{
+
+					_listItem.Amount += item.Amount;
+				}
 				isChanged = true;
 				break;
 			}
@@ -216,8 +235,8 @@ public class Inventory : MonoBehaviour
 		{
 			_items.Add(item);
 			InventoryController._Instance.Add(new HudItem(item, InventoryIcons._Instance.GetSprite(item.GetItemType)));
-			InventoryController._Instance.ChangeItemInUI(true);
 		}
+		InventoryController._Instance.ChangeItemInUI(true);
 
 		if (_items.Count == 0)
 		{
