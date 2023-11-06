@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerController : MonoBehaviour {
 	[Header("Move Parameters")]
