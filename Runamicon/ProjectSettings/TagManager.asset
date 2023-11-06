@@ -6,18 +6,21 @@ TagManager:
   tags:
   - Cube
   - CineMachineIgnore
+  - Ground
+  - Null
+  - Mob
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - PostProcessing
+  - Ground
+  - Obj
   - 
-  - 
-  - 
-  - 
+  - Chest
   - 
   - 
   - 
